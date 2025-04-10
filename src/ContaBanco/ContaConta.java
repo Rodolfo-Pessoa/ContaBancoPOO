@@ -10,34 +10,54 @@ public class ContaConta {
     private double saldo;
     private boolean status;
 
+//------------------------- Método Personalizado-------------------------
+
+    public void estadoAtual() {
+        System.out.println("____________________________________");
+        System.out.println("Conta: " + this.getNumConta());
+        System.out.println("Tipo: " + this.getTipo());
+        System.out.println("Nome: "+ this.getDono());
+        System.out.println("Saldo: " + this.getSaldo());
+        System.out.println("Status: " + this.getStatus());
+
+    }
+
 //------------------------- Cosntrutor-------------------------
+// Quer dizer qual será o estado da conta assim que for aberta
+//Sem salto e fechada
     public ContaConta() {
-        saldo = 0;
-        status = false;
+        this.setSaldo(0);
+        this.setStatus(false);
     }
 //------------------------- Métodos-------------------------
+//------------------------- Abrir conta-------------------------
     public void abrirConta(String t) {
-        setTipo(t);
-        setStatus(true);
+        this.setTipo(t);
+        this.setStatus(true);
+
         if (t == "CC") {
-            setSaldo(50.00);
+            this.setSaldo(50.00);
         } else if (t == "CP") {
-            setSaldo(150.00);
+            this.setSaldo(150.00);
         }
     }
+    //------------------------- Fechar Conta-------------------------
     public void fecharConta() {
-        if (saldo > 0) {
+        if (this.getSaldo() > 0) {
             System.out.println("Conta com salto positivo, favor sacar antes de fechar a conta!");
-        } else if (saldo < 0) {
+        } else if (this.getSaldo() < 0) {
             System.out.println("Conta com saldo devedor, favor quitar o débito antes de fechar a conta!");
         } else {
-            setStatus(false);
+            this.setStatus(false);
+            System.out.println("Conta fechada com sucesso!");
         }
     }
+    //------------------------- Depositar-------------------------
     public void depositar(double v) {
-        if (status = true) {
+        if (this.getStatus()) {
             setSaldo(getSaldo() + v);
-   //------------------------------------------------------------------
+            System.out.println("Deposito realizado com sucesso na conta de: " + this.getDono());
+   //--------------------------Comentário--------------------------
    //modifique o saldo para getSlado + v, some o valor e devolva para saldo
    //É a mesma coisa de: saldo = saldo + v;
    //----------------------------------------------------------------------
@@ -46,30 +66,36 @@ public class ContaConta {
             // Pois, se for status for 'false' a conta estará fechada
         }
     }
+    //-------------------------Sacar-------------------------
     public void sacar(double v) {
-        if (status = true) {
-            if (saldo > v) {
-                setSaldo(getSaldo() - v);
+        if (this.getStatus() == true) {
+            if (this.getSaldo() >= v) {
+                this.setSaldo(this.getSaldo() - v);
+                System.out.println("Saque realizado na conta de: " + this.getDono());
             }else {
                 System.out.println("Saldo Insuficiente");
             }
-            }
-
+            }else {
+            System.out.println("Impossível sacar de uma conta fechada!");
+        }
     }
+    //------------------------- Pagar Mensalidade-------------------------
     public void pagarMenal() {
         int v = 0;
-        if (tipo == "CC") {
+        if (this.getTipo() == "CC") {
             v = 12;
-        } else if (tipo == "CP") {
+        } else if (this.getTipo() == "CP") {
             v = 20;
         }
-        if (status == true) {
+        if (this.getStatus() != true) {
             saldo = saldo - v;
+        }else {
+            System.out.println("Imposível pagar uma conta fechada");
         }
     }
 //------------------------- Getters e Setters-------------------------
     public void setNumConta(int n) {
-        numConta = n;
+        this.numConta = n;
     }
 
     public int getNumConta() {
@@ -77,7 +103,7 @@ public class ContaConta {
     }
 //----------------------------------------------------------
     public void setDono(String d) {
-        dono = d;
+        this.dono = d;
 
     }
     public String getDono() {
@@ -86,7 +112,7 @@ public class ContaConta {
 
 //-----------------------------------------------------------------
     public void setTipo(String t) {
-        tipo = t;
+        this.tipo = t;
 
     }
     public String getTipo() {
@@ -94,7 +120,7 @@ public class ContaConta {
     }
  //-----------------------------------------------------------------
  public void setSaldo(double s) {
-        saldo = s;
+        this.saldo = s;
     }
     public double getSaldo() {
         return saldo;
@@ -102,7 +128,7 @@ public class ContaConta {
 
 //----------------------------------------------------------------
    public void setStatus(boolean st) {
-       status = st;
+       this.status = st;
    }
    public boolean getStatus() {
             return status;
